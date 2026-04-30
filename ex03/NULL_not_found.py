@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    NULL_not_found.py                                  :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2026/04/30 14:23:22 by lmatkows          #+#    #+#              #
+#    Updated: 2026/04/30 14:23:23 by lmatkows         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 def NULL_not_found(object: any) -> int:
     status: int = 0
     text_to_print: str = "Type not Found"

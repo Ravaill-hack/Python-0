@@ -1,26 +1,27 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    tester.py                                          :+:      :+:    :+:    #
+#    building.py                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: lmatkows <lmatkows@student.42perpignan.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/04/30 14:23:27 by lmatkows          #+#    #+#              #
-#    Updated: 2026/04/30 14:23:28 by lmatkows         ###   ########.fr        #
+#    Created: 2026/04/30 14:22:47 by lmatkows          #+#    #+#              #
+#    Updated: 2026/04/30 14:27:52 by lmatkows         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-from NULL_not_found import NULL_not_found
+import sys
 
-Nothing = None
-Garlic = float("NaN")
-Zero = 0
-Empty = ""
-Fake = False
+def check_input():
+    
 
-NULL_not_found(Nothing)
-NULL_not_found(Garlic)
-NULL_not_found(Zero)
-NULL_not_found(Empty)
-NULL_not_found(Fake)
-print(NULL_not_found("Brian"))
+def main():
+    """
+    Execution du programme.
+    """
+    args = sys.argv[1:]
+
+
+if __name__ == "__main__":
+    main()
+
