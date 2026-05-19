@@ -1,0 +1,5 @@
+title = "ft_package"
+
+[project]
+name = "ft_package"
+version = "0.0.1"
