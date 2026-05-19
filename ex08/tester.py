@@ -2,10 +2,10 @@ from time import sleep
 from tqdm import tqdm
 from Loading import ft_tqdm
 
-for elem in ft_tqdm(range(33333)):
-    sleep(0.000005)
+for elem in ft_tqdm(range(3433)):
+    sleep(0.0005)
 print()
 
-for elem in tqdm(range(33333)):
-    sleep(0.000005)
+for elem in tqdm(range(3433)):
+    sleep(0.0005)
 print()

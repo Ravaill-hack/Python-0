@@ -1,103 +1,80 @@
 
 import os
 
-def find_width(len: int) -> int:
-    min_screen_width = 27
+
+def find_width(len: int, logs_len: int) -> int:
     total_width = os.get_terminal_size()[0]
-    line_width = total_width - 26
-    theoretical_log_width = len * 2 + 1 + 2
-    # if 
-    return width
+    line_width = total_width - logs_len
+    if (line_width <= 0):
+        line_width = 1
+    return line_width
+
 
 def progress_stamp(value: int) -> str:
     if (value < 10):
-        progress_str = f"  {value}%|"
+        progress_str = f"  {value}%"
     elif (value < 100):
-        progress_str = f" {value}%|"
+        progress_str = f" {value}%"
     else:
-        progress_str = f"{value}%|"
+        progress_str = f"{value}%"
     return (progress_str)
 
-def time_stamp(step_time: int, i: int, total: int) -> str:
-    raw_str = f"| {i}/{total} [00:00:00, {step_time}it/s]"
-    truncated_str = raw_str
+
+def line(i: int, total: int, width: int, ratio: int) -> str:
+    full = int(width * ratio)
+    empty = width - full
+    line_str = '█' * full + '░' * empty
+    return (line_str)
+
+
+def time_stamp(i: int, total: int, start_time, max_width: int) -> str:
+    current_time = os.times()[4]
+    elapsed_time = current_time - start_time
+    if (elapsed_time != 0):
+        speed = i / elapsed_time
+    else:
+        speed = 0
+
+    elapsed_min = int(elapsed_time) // 60
+    min_str = "00"
+    if (elapsed_min < 10 and elapsed_min != 0):
+        min_str = f"0{elapsed_min:1d}"
+    elif (elapsed_min != 0):
+        min_str = f"{elapsed_min:2d}"
+
+    elapsed_sec = (int(elapsed_time) % 60)
+    sec_str = "00"
+    if (elapsed_sec < 10 and elapsed_sec != 0):
+        sec_str = f"0{elapsed_sec:1d}"
+    elif (elapsed_sec != 0):
+        sec_str = f"{elapsed_sec:2d}"
+
+    raw_str = f"{i}/{total} [{min_str}:{sec_str}<00:00, {speed:.2f}it/s]"
+    if (max_width != 1000):
+        truncated_str = raw_str[0: max_width]
+    else:
+        truncated_str = raw_str
     return (truncated_str)
 
 
 def ft_tqdm(lst: range) -> None:
-
-    raw_width = os.get_terminal_size()[0]
-    line_width = raw_width - 26
+    screen_width = os.get_terminal_size()[0]
     total = len(lst)
-    previous_time = os.times()[4]
+    start_time = os.times()[4]
+    logs_len = len(f"100%|| {total}/{total} [00:00<00:00, 1000.00it/s]")
+    max_width = 1000
+
+    line_width = find_width(total, logs_len)
+    if ((logs_len + 1) > screen_width):
+        max_width = screen_width - line_width - 7
 
     for i, item in enumerate(lst, start=1):
-        current_time = os.times()[4]
-        step_time = current_time - previous_time
-        previous_time = current_time
         ratio = (i + 1) / total
-        full = int(line_width * ratio)
-        empty = int(line_width * (1 - ratio))
-        line = '█' * full + '░' * empty
         progress_value = int(ratio * 100)
-        progress_str = progress_stamp(progress_value)
-        time_stamp_str = time_stamp(step_time, i, total)
-        print(f"\r{progress_str}{line}{time_stamp_str}", end="", flush=True)
+
+        prog_str = progress_stamp(progress_value)
+        line_str = line(i, total, line_width, ratio)
+        time_stamp_str = time_stamp(i, total, start_time, max_width)
+
+        print(f"\r{prog_str}|{line_str}| {time_stamp_str}", end="", flush=True)
         yield item
-
-
-# import time
-# import shutil
-
-# def format_time(seconds):
-#     """
-#     Format the given time in seconds as MM:SS.
-
-#     Args:
-#         seconds (float): Time in seconds.
-
-#     Returns:
-#         str: Formatted time in the format MM:SS.
-#     """
-#     m, s = divmod(seconds, 60)
-#     return f"{int(m):02d}:{int(s):02d}"
-
-
-# def ft_tqdm(lst: range) -> None:
-#     """
-#     Simulate a progress bar for iterating through a range.
-
-#     Args:
-#         lst (range): The range to iterate through.
-
-#     Yields:
-#         Any: The current item from the range.
-#         is a keyword in Python used in the context of creating generators.
-#         Generators are a way to create iterators, which are objects used to
-#         iterate over a sequence of values without having to store all those
-#         values in memory at once. Instead of generating allvalues and returning
-#         them in one go, a generator yields one value at a time whenever the
-#         yield statement is encountered.
-#     """
-#     total = len(lst)
-#     start_time = time.time()
-
-#     terminal_width = shutil.get_terminal_size().columns - 30
-#     progress_bar_width = terminal_width - 10
-
-#     for i, item in enumerate(lst, start=1):
-#         progress = int(i / total * progress_bar_width)
-#         elapsed_time = time.time() - start_time
-#         speed = i / elapsed_time
-#         eta = (total - i) / speed
-
-#         elapsed_formatted = format_time(elapsed_time)
-#         eta_formatted = format_time(eta)
-
-#         progress_bar = f"|{'█' * progress:<{progress_bar_width}}|"
-#         progress_percentage = progress * 100 // progress_bar_width
-#         progress_info = f"{progress_percentage}%{progress_bar} {i}/{total}"
-#         time_info = f"[{elapsed_formatted}<{eta_formatted}, {speed:.2f}it/s]"
-
-#         print(f"\r{progress_info} {time_info}", end="", flush=True)
-#         yield item
