@@ -1,5 +1,8 @@
 
 def all_thing_is_obj(object: any) -> int:
+    """
+    this is the fucntion you asked me to do, it does some weird stuff.
+    """
     type_obj = type(object)
     if type_obj != str:
         sentence_before = str(type_obj).split("'")[1].capitalize() + " :"

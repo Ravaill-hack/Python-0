@@ -3,6 +3,9 @@ import os
 
 
 def find_width(len: int, logs_len: int) -> int:
+    """
+    Determine la largeur de la barre
+    """
     total_width = os.get_terminal_size()[0]
     line_width = total_width - logs_len
     if (line_width <= 0):
@@ -11,6 +14,9 @@ def find_width(len: int, logs_len: int) -> int:
 
 
 def progress_stamp(value: int) -> str:
+    """
+    Determine la progression
+    """
     if (value < 10):
         progress_str = f"  {value}%"
     elif (value < 100):
@@ -21,6 +27,9 @@ def progress_stamp(value: int) -> str:
 
 
 def line(i: int, total: int, width: int, ratio: int) -> str:
+    """
+    Dessine la barre
+    """
     full = int(width * ratio)
     empty = width - full
     line_str = '█' * full + '░' * empty
@@ -28,6 +37,9 @@ def line(i: int, total: int, width: int, ratio: int) -> str:
 
 
 def time_stamp(i: int, total: int, start_time, max_width: int) -> str:
+    """
+    Construit le timestamp et le met en forme
+    """
     current_time = os.times()[4]
     elapsed_time = current_time - start_time
     if (elapsed_time != 0):
@@ -58,6 +70,9 @@ def time_stamp(i: int, total: int, start_time, max_width: int) -> str:
 
 
 def ft_tqdm(lst: range) -> None:
+    """
+    Construit l'affichage de la barre et l'emission des chunks
+    """
     screen_width = os.get_terminal_size()[0]
     total = len(lst)
     start_time = os.times()[4]

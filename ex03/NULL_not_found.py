@@ -1,5 +1,8 @@
 
 def NULL_not_found(object: any) -> int:
+    """
+    Print different types of none values
+    """
     status: int = 0
     text_to_print: str = "Type not Found"
     type_obj = type(object)
